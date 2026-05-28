@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Nacarat | Data Engineer & Analyst</title>
+    <meta name="description" content="Engenheiro de Dados com especialidade em arquitetura Medallion, pipelines ETL e análise quantitativa.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #10b981;
+            --accent-alt: #f97316;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --border: #e2e8f0;
+            --spacing: 1rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #f1f5f9;
+                --text-light: #cbd5e1;
+                --bg: #0f172a;
+                --border: #334155;
+                --secondary: #1e293b;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            color: var(--primary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            h2 { color: var(--text); }
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--text);
+        }
+
+        p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 100;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            header {
+                background-color: rgba(15, 23, 42, 0.95);
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem var(--spacing);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            padding: 6rem var(--spacing) 4rem;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hero {
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+            }
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hero h1 {
+                color: var(--text);
+            }
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text);
+            border: 1.5px solid var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* About */
+        .about {
+            padding: 5rem var(--spacing);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .highlight {
+            padding: 1.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .highlight:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .highlight-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Projects */
+        .projects {
+            padding: 5rem var(--spacing);
+            background: var(--secondary);
+            color: white;
+        }
+
+        .projects h2 {
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-6px);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .project-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-link {
+            color: var(--accent);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s ease;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+        }
+
+        /* Skills */
+        .skills {
+            padding: 5rem var(--spacing);
+        }
+
+        .skills h2 {
+            margin-bottom: 3rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            background: var(--bg);
+            transition: all 0.2s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+
+        .skill-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .skill-title {
+                color: var(--text);
+            }
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .skill-item::before {
+            content: "→";
+            color: var(--accent);
+            font-weight: 700;
+            min-width: 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem var(--spacing);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            border-radius: 1rem;
+            margin: 5rem var(--spacing);
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem var(--spacing);
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-weight: 600;
+            color: var(--text);
+            transition: color 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem var(--spacing) 2rem;
+            }
+
+            .hero h1 {
+                margin-bottom: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .about, .projects, .skills {
+                padding: 3rem var(--spacing);
+            }
+
+            .cta-section {
+                margin: 3rem var(--spacing);
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Utility */
+        .text-muted {
+            color: var(--text-light);
+        }
+
+        .mt-4 {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">Daniel<span>.dev</span></div>
+            <ul class="nav-links">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Análise de Negócios, BI e Engenharia de Dados</h1>
+                <p class="hero-description">
+                    Especializado em arquitetura de pipelines escaláveis, transformação de dados e inteligência 
+                    de negócio. Com 3 anos de experiência em Análise, modelagem dimensional e simulações 
+                    probabilísticas, ajudando a transformar ideias e dados em instrumentos diretos de decisão.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contato" class="btn btn-primary">Vamos conversar</a>
+                    <a href="https://github.com/Nacarat1" target="_blank" class="btn btn-secondary">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="sobre" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Quem sou eu</h2>
+                    <p>
+                        Sou Daniel, formando pela Escola de Engenharia UFF com background em análise quantitativa, gestão de riscos,
+                     análise financeira e automação. Tenho paixão por transformar dados brutos em inteligência operacional através 
+                        de arquiteturas bem desenhadas, identificação correta dos requisitos de negócios e apresentação que gere impacto na decisão a ser tomada.
+                    </p>
+                    <p>
+                        Minha expertise combina engenharia de dados (ETL, Medallion, machine learning) com 
+                        análise quantitativa (simulações de Monte Carlo, regressão estatística, análise de cenários) e automação (Python, Appscript e PowerApps).
+                    </p>
+                </div>
+                <div class="about-highlights">
+                    <div class="highlight">
+                        <div class="highlight-number">500+</div>
+                        <div class="highlight-text">Variáveis transformadas em pipelines de risco</div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-number">27</div>
+                        <div class="highlight-text">Projetos modelados em análise de riscos</div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-number">-42%</div>
+                        <div class="highlight-text">Redução em tempo de tarefas operacionais</div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-number">Aprender</div>
+                        <div class="highlight-text">Continuo buscando novos conhecimentos e oportunidades</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projetos" class="projects">
+        <div class="container">
+            <h2>Projetos Destacados</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-title">🏆 Copa 2026 - Previsão de Gols</div>
+                    <p class="project-description">
+                        Pipeline Medallion completo com modelagem estatística e simulação de Monte Carlo. 
+                        De ingestão via API até regressão de Poisson com 100k iterações.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Machine Learning</span>
+                        <span class="tech-badge">Medallion</span>
+                        <span class="tech-badge">Monte Carlo</span>
+                    </div>
+                    <a href="https://github.com/Nacarat1/Gols_Brasil_WC2026" target="_blank" class="project-link">
+                        Ver Projeto →
+                    </a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-title">📊 ETL Financeiro End-to-End</div>
+                    <p class="project-description">
+                        Pipeline de ingestão de múltiplas fontes (APIs, Google Sheets, SQL) com transformação 
+                        estruturada e modelagem dimensional para BI.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">SQL</span>
+                        <span class="tech-badge">APIs</span>
+                        <span class="tech-badge">ETL</span>
+                        <span class="tech-badge">Power BI</span>
+                    </div>
+                    <a href="https://github.com/Nacarat1/ETL_Financeiro" target="_blank" class="project-link">
+                        Ver Projeto →
+                    </a>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-title">🎲 Simulação Estocástica</div>
+                    <p class="project-description">
+                        Análise de risco e cenários probabilísticos. Modelagem de 500+ variáveis correlacionadas 
+                        para decisões estratégicas em projetos capital-intensivos.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">NumPy</span>
+                        <span class="tech-badge">SciPy</span>
+                        <span class="tech-badge">Estatística</span>
+                        <span class="tech-badge">Monte Carlo</span>
+                    </div>
+                    <a href="https://github.com/Nacarat1/GSheets-MonteCarlo-Basico" target="_blank" class="project-link">
+                        Explorar →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Competências Técnicas</h2>
+            <div class="skills-grid">
+                <!-- Data Engineering -->
+                <div class="skill-category">
+                    <div class="skill-title">🏗️ Data Engineering</div>
+                    <ul class="skill-list">
+                        <li class="skill-item">Arquitetura Medallion</li>
+                        <li class="skill-item">ETL End-to-End</li>
+                        <li class="skill-item">Pipelines Escaláveis</li>
+                        <li class="skill-item">Integração de Sistemas</li>
+                        <li class="skill-item">Machine Learning</li>
+                        <li class="skill-item">Qualidade de Dados</li>
+                    </ul>
+                </div>
+
+                <!-- Languages -->
+                <div class="skill-category">
+                    <div class="skill-title">💻 Linguagens & Core</div>
+                    <ul class="skill-list">
+                        <li class="skill-item">Python (Pandas, NumPy, SciPy)</li>
+                        <li class="skill-item">SQL (SQL Server, PostgreSQL)</li>
+                        <li class="skill-item">APIs REST, JSON e HTTP</li>
+                        <li class="skill-item">JavaScript / AppScript</li>
+                        <li class="skill-item">Git & Versionamento</li>
+                    </ul>
+                </div>
+
+                <!-- Analytics & ML -->
+                <div class="skill-category">
+                    <div class="skill-title">📈 Analytics & Modelagem</div>
+                    <ul class="skill-list">
+                        <li class="skill-item">Monte Carlo Simulation</li>
+                        <li class="skill-item">Regressão Estatística</li>
+                        <li class="skill-item">Análise de Cenários</li>
+                        <li class="skill-item">Business Intelligence</li>
+                        <li class="skill-item">Power BI & Looker Studio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contato" class="cta-section">
+        <div class="container">
+            <h2>Vamos trabalhar juntos?</h2>
+            <p>
+                Estou sempre aberto a novos desafios em Data Engineering, Analytics e projetos quantitativos.
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:nacaratdan@gmail.com" class="btn btn-primary">nacaratdan@gmail.com</a>
+                <a href="https://linkedin.com/in/danielnacarat" target="_blank" class="btn btn-secondary" style="color: white; border-color: white;">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/Nacarat1" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/danielnacarat" target="_blank">LinkedIn</a>
+                <a href="mailto:nacaratdan@gmail.com">Email</a>
+            </div>
+            <p class="text-muted">
+                © 2025 Daniel Nacarat
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
